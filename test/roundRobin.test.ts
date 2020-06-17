@@ -1,0 +1,63 @@
+/*
+ * @Author: caiyu.xu 
+ * @Date: 2020-06-12 17:18:25 
+ * @Last Modified by: caiyu.xu
+ * @Last Modified time: 2020-06-16 17:39:06
+ */
+import { RoundRobin } from "../src/roundRobin";
+import assert from "assert";
+// import chai from "chai";
+
+
+describe("RoundRobin", function () {
+  const randomPool = ["127.0.0.1", "127.0.0.3", "127.0.0.2", "127.0.0.4"];
+  const weightRandomPool = [
+    { host: "127.0.0.2", weight: 2 },
+    { host: "127.0.0.1", weight: 3 },
+    { host: "127.0.0.3", weight: 10 },
+  ];
+
+  const random = new RoundRobin(randomPool);
+
+  it("has weight property", function () {
+    const random = new RoundRobin(weightRandomPool);
+
+    assert(random.pool);
+    assert(typeof random.pool === "object");
+  });
+
+  it("#currentIndex", function () {
+    const random = new RoundRobin(weightRandomPool);
+
+    assert(typeof random.currentIndex === "number");
+    assert.equal(random.currentIndex, 0);
+  });
+  
+  it("load balancer", function () {
+    const statistics: Record<string, number> = {};
+
+    const loop = 10000;
+    let counter: number;
+    for (let i = 0; i < loop; i++) {
+      const ip = random.pick();
+      counter = statistics[ip] || 0;
+      statistics[ip] = counter + 1;
+    }
+
+    const len = randomPool.length;
+    const avg = loop / len;
+    const expectPer = Number((avg/loop).toFixed(3));
+
+    for(let i = 0; i < len; i++){
+      const address = random.pool[i];
+      const count = statistics[address];
+
+      const realPer = Number((count/loop).toFixed(3));
+
+      assert.equal(expectPer, realPer);
+    }
+    // console.log(statistics);
+    // console.log(random.pick());
+    
+  });
+});

@@ -1,0 +1,36 @@
+{
+  "name": "load-balancers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r ts-node/register test/**/*.ts",
+    "build-ts": "tsc",
+    "dev": "tsc && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xu8511831/load-balancers.git"
+  },
+  "author": "caiyu.xcy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xu8511831/load-balancers/issues"
+  },
+  "homepage": "https://github.com/xu8511831/load-balancers#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/async": "^3.2.0",
+    "@types/eslint": "^6.8.0",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.1",
+    "@types/request": "^2.48.4",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "mocha": "^8.0.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.8.3"
+  }
+}
