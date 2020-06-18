@@ -1,4 +1,4 @@
-import { WeightRandom } from "../src/weightRandom";
+import { WeightRandom } from "../src/weightedRandom";
 import assert from "assert";
 
 
@@ -19,7 +19,7 @@ describe("WeightRandom", function () {
     assert.ok(typeof random.pool === "object");
   });
 
-  it("load balancer", function () {
+  it("the offset must be less than 1% of high traffic", function () {
     const statistics: Record<string, number> = {};
 
     const loop = 100000;
@@ -44,7 +44,8 @@ describe("WeightRandom", function () {
       // console.log((weight/totalWeight).toFixed(3), (count/loop).toFixed(3));
 
       // offset 2%
-      assert(Math.abs(expectPer - realPer) <= 0.02);
+      // console.log(Math.abs(expectPer - realPer));
+      assert(Math.abs(expectPer - realPer) <= 0.01);
     }
     
   });

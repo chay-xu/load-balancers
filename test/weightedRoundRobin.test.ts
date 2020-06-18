@@ -20,9 +20,7 @@ describe("WeightedRoundRobin", function () {
     assert.ok(typeof random.pool === "object");
   });
 
-  it("load balancer", function () {
-    // console.log(random.pick());
-    const statistics: Record<string, number> = {};
+  it("load balance must be smooth", function(){
     const order = [];
 
     for (let i = 0; i < 10; i++) {
@@ -31,8 +29,11 @@ describe("WeightedRoundRobin", function () {
     }
     // console.log(statistics, order);
     assert.deepStrictEqual(order, [5, 5, 3, 5, 2, 3, 5, 2, 3, 5]);
+  });
 
-    const loop = 10000;
+  it("the ratio must be absolute equality of high traffic", function () {
+    const statistics: Record<string, number> = {};
+    const loop = 100000;
     let total: number;
 
     for (let i = 0; i < loop; i++) {
@@ -43,7 +44,7 @@ describe("WeightedRoundRobin", function () {
     }
 
     const len = weightRandomPool.length;
-    
+
     for(let i = 0; i < len; i++){
       const address = random.pool[i];
       const weight = random.getWeight(address);
@@ -52,10 +53,10 @@ describe("WeightedRoundRobin", function () {
 
       const expectPer = Number((weight/totalWeight).toFixed(3));
       const realPer = Number((count/loop).toFixed(3));
-      // console.log((weight/totalWeight).toFixed(3), (count/loop).toFixed(3));
+      // console.log((weight/totalWeight), (count/loop));
 
-      // offset 2%
-      assert(Math.abs(expectPer - realPer) <= 0.02);
+      // console.log(Math.abs(expectPer - realPer));
+      assert(Math.abs(expectPer - realPer) === 0);
     }
   });
 });

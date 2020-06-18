@@ -1,5 +1,5 @@
 import { Base } from "./base";
-import { AddressInterface } from "./interface";
+// import { AddressInterface } from "./interface";
 import { randomInteger } from "./util";
 
 // interface AddressListInterface {

@@ -26,24 +26,24 @@ describe("Base class", function () {
   //   assert.ok(typeof random.pool === "object");
   // });
 
-  it("#pool", function () {
+  it(".pool", function () {
     assert(random.pool);
     assert(typeof random.pool === "object");
   });
 
-  it("#size", function () {
+  it(".size", function () {
     assert.equal(weightRandomPool.length, random.size);
   });
 
-  it("#totalWeight", function () {
+  it(".totalWeight", function () {
     assert(typeof random.totalWeight === "number");
   });
 
-  it("#isWeightSame", function () {
+  it(".isWeightSame", function () {
     assert(typeof random.isWeightSame === "boolean");
   });
 
-  it("#weightMap", function () {
+  it(".weightMap", function () {
     // console.log(random.weightMap);
     const host = weightRandomPool[0].host;
     const weight = weightRandomPool[0].weight;
@@ -54,12 +54,12 @@ describe("Base class", function () {
     assert.equal(random.weightMap.size, weightRandomPool.length);
   });
 
-  it("#pick()", function () {
+  it(".pick()", function () {
     // console.log(random.pick());
     assert(random.pick());
   });
 
-  it("#getWeight()", function () {
+  it(".getWeight()", function () {
     const host = weightRandomPool[0].host;
     const weight = weightRandomPool[0].weight;
     // console.log(random.pick());

@@ -2,7 +2,7 @@
  * @Author: caiyu.xu 
  * @Date: 2020-06-12 17:18:25 
  * @Last Modified by: caiyu.xu
- * @Last Modified time: 2020-06-16 17:39:06
+ * @Last Modified time: 2020-06-18 10:57:18
  */
 import { RoundRobin } from "../src/roundRobin";
 import assert from "assert";
@@ -26,7 +26,7 @@ describe("RoundRobin", function () {
     assert(typeof random.pool === "object");
   });
 
-  it("#currentIndex", function () {
+  it(".currentIndex", function () {
     const random = new RoundRobin(weightRandomPool);
 
     assert(typeof random.currentIndex === "number");
