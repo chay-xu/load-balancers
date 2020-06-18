@@ -1,9 +1,3 @@
-/*
- * @Author: caiyu.xu 
- * @Date: 2020-06-08 10:59:32 
- * @Last Modified by: caiyu.xu
- * @Last Modified time: 2020-06-11 15:51:36
- */
 export interface AddressInterface {
   host: string;
   weight?: number;

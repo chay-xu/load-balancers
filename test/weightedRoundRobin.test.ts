@@ -20,8 +20,32 @@ describe("WeightedRoundRobin", function () {
     assert.ok(typeof random.pool === "object");
   });
 
+  it(".pick()", function () {
+    assert(random.pick());
+    assert(typeof random.pick() === "string");
+  });
+
+  it(".currentIndex", function () {
+    random.reset();
+    assert(typeof random.currentIndex === "number");
+    assert.equal(random.currentIndex, -1);
+  });
+  
+  it(".gcdWeight", function () {
+    random.reset();
+    assert(typeof random.gcdWeight === "number");
+    assert.equal(random.gcdWeight, 1);
+  });
+
+  it(".currentWeight", function () {
+    random.reset();
+    assert(typeof random.currentWeight === "number");
+    assert.equal(random.currentWeight, 0);
+  });
+
   it("load balance must be smooth", function(){
     const order = [];
+    random.reset();
 
     for (let i = 0; i < 10; i++) {
       const ip = random.pick();
@@ -55,7 +79,6 @@ describe("WeightedRoundRobin", function () {
       const realPer = Number((count/loop).toFixed(3));
       // console.log((weight/totalWeight), (count/loop));
 
-      // console.log(Math.abs(expectPer - realPer));
       assert(Math.abs(expectPer - realPer) === 0);
     }
   });

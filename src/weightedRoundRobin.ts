@@ -1,12 +1,6 @@
-/*
- * @Author: caiyu.xu
- * @Date: 2020-06-12 15:41:33
- * @Last Modified by: caiyu.xu
- * @Last Modified time: 2020-06-17 19:53:13
- */
 import { Base } from "./base";
 // import { PoolType } from "./interface";
-import { randomInteger } from "./util";
+// import { randomInteger } from "./util";
 
 export class WeightedRoundRobin extends Base {
   currentIndex: number;

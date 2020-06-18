@@ -1,12 +1,6 @@
-/*
- * @Author: caiyu.xu
- * @Date: 2020-06-08 10:59:41
- * @Last Modified by: caiyu.xu
- * @Last Modified time: 2020-06-17 17:12:55
- */
 // import { parse as urlParse} from "url";
-import { PoolType, StandardPoolType } from "./interface";
-import { transformPoolToStandard, shuffle } from "./util";
+import { PoolType, AddressInterface, StandardPoolType } from "./interface";
+import { shuffle } from "./util";
 
 interface OptionsInterface {
   defaultWeight: number;
@@ -17,17 +11,20 @@ interface OptionsInterface {
 const DEFAULT_WEIGHT = 100;
 
 export class Base  {
-  // export class Base{
-  _originalPool: PoolType;
+  private _originalPool: PoolType;
   // _pool: StandardPoolType;
-  _pool: Array<string>;
-  _weightMap: Map<string, number>;
+  private _pool: Array<string>;
+  private _weightMap: Map<string, number>;
+  private _totalWeight: number;
+  private _isWeightSame: boolean;
+  private _maxWeight: number;
   defaultWeight: number;
-  _totalWeight: number;
-  _isWeightSame: boolean;
-  _maxWeight: number;
   // pool: PoolType;
   // addressMap: Map<string, number>;
+
+  // public pick(hash?: string): string {
+  //   return "";
+  // }
 
   constructor(pool: PoolType, options?: OptionsInterface) {
     const { defaultWeight } = options || {};
@@ -49,7 +46,7 @@ export class Base  {
     }
     // console.log("===",shuffle(originalPool));
 
-    const prepareData = transformPoolToStandard(originalPool, this.defaultWeight);
+    const prepareData = this._transformPoolToStandard(originalPool, this.defaultWeight);
 // console.log(prepareData);
     // const prepareData = this.parse(pool);
 
@@ -87,12 +84,68 @@ export class Base  {
     return this._maxWeight;
   }
 
-  getWeight(address: string) {
+  private _transformPoolToStandard(pool: PoolType, defaultWeight: number) {
+    if (pool.length === 0) {
+      throw new Error("cannot transform a zero length pool");
+    }
+  
+    const addressList: Array<string> = [];
+    const weightMap: Map<string, number> = new Map();
+  
+    let totalWeight = 0;
+    let isWeightSame = true;
+    let maxWeight = 0;
+  
+    pool.forEach((node: string | AddressInterface, index: number) => {
+      // console.log(item);
+      let realWeight;
+  
+      if (typeof node === "object") {
+        const { host, weight } = node;
+  
+        addressList.push(host);
+  
+        realWeight = weight ? weight : defaultWeight;
+        weightMap.set(host, realWeight);
+  
+        if (index > 0) {
+          const prevWeight = (pool[index - 1] as AddressInterface).weight;
+  
+          if (weight !== prevWeight) {
+            isWeightSame = false;
+          }
+  
+          maxWeight = Math.max(weight, prevWeight);
+        }
+      } else {
+        addressList.push(node);
+  
+        realWeight = defaultWeight;
+        weightMap.set(node, realWeight);
+      }
+  
+      totalWeight += realWeight;
+    });
+  
+    return {
+      addressList,
+      weightMap,
+      totalWeight,
+      isWeightSame,
+      maxWeight
+    };
+  }
+
+  public getWeight(address: string) {
     return this.weightMap.get(address);
   }
 
-  reset(){
+  public reset(){
     // return {};
+  }
+
+  public pick(): string {
+    throw new Error("abstract engine");
   }
 
   // /**
@@ -113,10 +166,6 @@ export class Base  {
   //   }
   //   transformPoolToStandard
   // }
-
-  pick() {
-    throw new Error("abstract engine");
-  }
 
   // getWeight(address: string) {
   //   console.log(address);

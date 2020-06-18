@@ -1,9 +1,3 @@
-/*
- * @Author: caiyu.xu 
- * @Date: 2020-06-12 17:18:25 
- * @Last Modified by: caiyu.xu
- * @Last Modified time: 2020-06-18 10:57:18
- */
 import { RoundRobin } from "../src/roundRobin";
 import assert from "assert";
 // import chai from "chai";
@@ -26,6 +20,11 @@ describe("RoundRobin", function () {
     assert(typeof random.pool === "object");
   });
 
+  it(".pick()", function () {
+    assert(random.pick());
+    assert(typeof random.pick() === "string");
+  });
+
   it(".currentIndex", function () {
     const random = new RoundRobin(weightRandomPool);
 
@@ -33,11 +32,11 @@ describe("RoundRobin", function () {
     assert.equal(random.currentIndex, 0);
   });
   
-  it("load balancer", function () {
+  it("pick ratio is equal to weight ratio", function () {
     const statistics: Record<string, number> = {};
-
-    const loop = 10000;
+    const loop = 100000;
     let counter: number;
+
     for (let i = 0; i < loop; i++) {
       const ip = random.pick();
       counter = statistics[ip] || 0;

@@ -19,11 +19,16 @@ describe("WeightRandom", function () {
     assert.ok(typeof random.pool === "object");
   });
 
+  it(".pick()", function () {
+    assert(random.pick());
+    assert(typeof random.pick() === "string");
+  });
+
   it("the offset must be less than 1% of high traffic", function () {
     const statistics: Record<string, number> = {};
-
     const loop = 100000;
     let total: number;
+    
     for (let i = 0; i < loop; i++) {
       const ip = random.pick();
       total = statistics[ip] || 0;
@@ -38,14 +43,12 @@ describe("WeightRandom", function () {
       const totalWeight = random.totalWeight;
       const count = statistics[address];
 
-
       const expectPer = Number((weight/totalWeight).toFixed(3));
       const realPer = Number((count/loop).toFixed(3));
-      // console.log((weight/totalWeight).toFixed(3), (count/loop).toFixed(3));
+      // console.log((weight/totalWeight), (count/loop));
 
-      // offset 2%
-      // console.log(Math.abs(expectPer - realPer));
-      assert(Math.abs(expectPer - realPer) <= 0.01);
+      // offset 1%
+      assert(Math.abs(expectPer - realPer) < 0.01);
     }
     
   });

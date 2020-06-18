@@ -1,9 +1,3 @@
-/*
- * @Author: caiyu.xu 
- * @Date: 2020-06-12 17:19:50 
- * @Last Modified by: caiyu.xu
- * @Last Modified time: 2020-06-16 17:09:08
- */
 import { Random } from "../src/random";
 import assert from "assert";
 // import chai from "chai";
@@ -26,11 +20,16 @@ describe("Random", function () {
     assert(typeof random.pool === "object");
   });
 
-  it("load balancer", function () {
-    const statistics: Record<string, number> = {};
+  it(".pick()", function () {
+    assert(random.pick());
+    assert(typeof random.pick() === "string");
+  });
 
+  it("the offset must be less than 1% of high traffic", function () {
+    const statistics: Record<string, number> = {};
     const loop = 100000;
     let total: number;
+    
     for (let i = 0; i < loop; i++) {
       const ip = random.pick();
       total = statistics[ip] || 0;
@@ -47,10 +46,10 @@ describe("Random", function () {
       const count = statistics[address];
 
       const realPer = Number((count/loop).toFixed(3));
-      // console.log(expectAvg, realAvg);
+      // console.log((avg/loop), (count/loop));
 
-      // offset 2%
-      assert(Math.abs(expectPer - realPer) <= 0.02);
+      // offset 1%
+      assert(Math.abs(expectPer - realPer) < 0.01);
     }
     
   });
