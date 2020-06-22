@@ -1,6 +1,7 @@
 // import { WeightRandom } from "../src/weightedRandom";
 import { Base } from "../src/base";
 import assert from "assert";
+// import { Random } from "../src/random";
 
 describe("Base class", function () {
   const randomPool = ["127.0.0.1", "127.0.0.3", "127.0.0.2", "127.0.0.4"];
@@ -65,14 +66,21 @@ describe("Base class", function () {
       assert(random.pick());
     } catch (err) {
       assert(err instanceof Error);
-      assert.strictEqual(err.message, "abstract engine");
+      // assert.strictEqual(err.message, "abstract engine");
     }
   });
 
   it(".getWeight()", function () {
     const host = weightRandomPool[0].host;
     const weight = weightRandomPool[0].weight;
-    // console.log(random.pick());
-      assert.equal(random.getWeight(host), weight);
+
+    assert.equal(random.getWeight(host), weight);
   });
+
+  it(".reset()", function () {
+    const compareRandom = new Base(weightRandomPool);
+
+    assert.deepEqual(random.reset(weightRandomPool), compareRandom.pool);
+  });
+  
 });

@@ -26,29 +26,29 @@ describe("WeightedRoundRobin", function () {
   });
 
   it(".currentIndex", function () {
-    random.reset();
+    random.reset(weightRandomPool);
     assert(typeof random.currentIndex === "number");
     assert.equal(random.currentIndex, -1);
   });
   
   it(".gcdWeight", function () {
-    random.reset();
+    random.reset(weightRandomPool);
     assert(typeof random.gcdWeight === "number");
     assert.equal(random.gcdWeight, 1);
   });
 
   it(".currentWeight", function () {
-    random.reset();
+    random.reset(weightRandomPool);
     assert(typeof random.currentWeight === "number");
     assert.equal(random.currentWeight, 0);
   });
 
   it("load balance must be smooth", function(){
     const order = [];
-    random.reset();
+    random.reset(weightRandomPool);
 
     for (let i = 0; i < 10; i++) {
-      const ip = random.pick();
+      const ip = random.pick().host;
       order.push(random.getWeight(ip));
     }
     // console.log(statistics, order);
@@ -61,7 +61,7 @@ describe("WeightedRoundRobin", function () {
     let total: number;
 
     for (let i = 0; i < loop; i++) {
-      const ip = random.pick();
+      const ip = random.pick().host;
       // console.log(ip);
       total = statistics[ip] || 0;
       statistics[ip] = total + 1;

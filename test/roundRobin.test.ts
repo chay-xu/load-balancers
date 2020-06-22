@@ -38,7 +38,7 @@ describe("RoundRobin", function () {
     let counter: number;
 
     for (let i = 0; i < loop; i++) {
-      const ip = random.pick();
+      const ip = random.pick().host;
       counter = statistics[ip] || 0;
       statistics[ip] = counter + 1;
     }

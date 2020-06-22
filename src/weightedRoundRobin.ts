@@ -1,5 +1,5 @@
 import { Base } from "./base";
-// import { PoolType } from "./interface";
+import { PoolType } from "./interface";
 // import { randomInteger } from "./util";
 
 export class WeightedRoundRobin extends Base {
@@ -8,13 +8,15 @@ export class WeightedRoundRobin extends Base {
   gcdWeight: number;
   currentWeight: number;
 
-  reset() {
+  reset(pool: PoolType) {
+    const nodeList = super.reset(pool);
     this.currentIndex = -1;
     this.currentWeight = 0;
-    // this.offset = randomInteger(this.size);
 
     this.gcdWeight = this.gcd(...this.weightMap.values());
     // console.log("gcdWeight",this.gcdWeight);
+
+    return nodeList;
   }
 
   gcd(...arr: number[]): number {
@@ -53,7 +55,9 @@ export class WeightedRoundRobin extends Base {
       // console.log(this.getWeight(address), this.currentWeight);
 
       if (this.getWeight(address) >= this.currentWeight) {
-        return address;
+        return {
+          host: address
+        };
       }
     }
 

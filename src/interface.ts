@@ -3,16 +3,14 @@ export interface AddressInterface {
   weight?: number;
 }
 
-// export interface BaseInterface {
-//   _originalPool: PoolType;
-//   // _pool: StandardPoolType;
-//   // _pool: Set<string>;
-//   pool: Array<string>;
-//   // pool: Set<string>;
-//   // addressMap: Map<string, number>;
-//   pick(): object | string;
-// }
-
 export type StandardPoolType = Array<AddressInterface>
 
 export type PoolType = Array<string> | StandardPoolType
+
+export interface StandardProperty {
+  pool: Array<string>;
+  weightMap: Map<string, number>;
+  totalWeight: number;
+  isWeightSame: boolean;
+  maxWeight: number;
+}

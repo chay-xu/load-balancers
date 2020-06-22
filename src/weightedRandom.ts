@@ -33,7 +33,9 @@ export class WeightRandom extends Base {
       address = pool[index];
     }
 
-    return address;
+    return {
+      host: address
+    };
   }
 
   // getWeight(address: string) {

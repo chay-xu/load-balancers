@@ -1,11 +1,14 @@
 import { Base } from "./base";
-// import { PoolType } from "./interface";
+import { PoolType } from "./interface";
 
 export class RoundRobin extends Base {
   currentIndex: number;
 
-  reset(){
+  reset(pool: PoolType) {
+    const nodeList = super.reset(pool);
     this.currentIndex = 0;
+
+    return nodeList;
   }
 
   pick() {
@@ -14,6 +17,8 @@ export class RoundRobin extends Base {
     const len = this.size;
     this.currentIndex = this.currentIndex % len;
     
-    return address;
+    return {
+      host: address
+    };
   }
 }

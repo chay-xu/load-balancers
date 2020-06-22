@@ -31,7 +31,7 @@ describe("Random", function () {
     let total: number;
     
     for (let i = 0; i < loop; i++) {
-      const ip = random.pick();
+      const ip = random.pick().host;
       total = statistics[ip] || 0;
       statistics[ip] = total + 1;
     }
