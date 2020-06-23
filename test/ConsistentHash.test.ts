@@ -1,4 +1,4 @@
-import { IpHash } from "../src/ipHash";
+import { ConsistentHash } from "../src/consistentHash";
 import assert from "assert";
 // import chai from "chai";
 
@@ -12,10 +12,10 @@ describe("IP Hash", function () {
     { host: "127.0.0.3", weight: 10 },
   ];
 
-  const random = new IpHash(randomPool);
+  const random = new ConsistentHash(randomPool);
 
   it("has weight property", function () {
-    const random = new IpHash(weightRandomPool);
+    const random = new ConsistentHash(weightRandomPool);
 
     assert(random.pool);
     assert(typeof random.pool === "object");

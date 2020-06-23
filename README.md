@@ -1,12 +1,18 @@
-# load-balancers
+# load-balancers 
+![CI](https://github.com/xu8511831/load-balancers/workflows/CI/badge.svg)
 
-## getting started
+## Install
 
-## build
+
+## Getting Started
+
+
+
+## Build
 
 execute `npm run build` from a terminal window
 
-## test
+## Test
 
 let's run the test script
 

@@ -14,6 +14,10 @@ describe("Base class", function () {
 
   const random = new Base(weightRandomPool);
 
+  it("empty pool", function () {
+    assert(new Base([]));
+  });
+
   it("not weight property", function () {
     const random = new Base(randomPool);
 

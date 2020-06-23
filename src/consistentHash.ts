@@ -5,7 +5,7 @@ import { PoolType } from "./interface";
 
 const NUM = 128;
 
-export class IpHash extends Base {
+export class ConsistentHash extends Base {
   private _virtualNodes: Map<number, string>;
   private _sortKeys: Array<number>;
 

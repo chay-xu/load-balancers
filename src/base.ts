@@ -20,18 +20,12 @@ export class Base{
   private _maxWeight: number;
   defaultWeight: number;
   // pool: PoolType;
-  // addressMap: Map<string, number>;
-
-  // public pick(hash?: string): string {
-  //   return "";
-  // }
 
   constructor(pool: PoolType, options?: OptionsInterface) {
     const { defaultWeight } = options || {};
 
     this.defaultWeight = defaultWeight || DEFAULT_WEIGHT;
 
-    // this.setPool(pool);
     this.reset(pool);
   }
 
@@ -40,10 +34,14 @@ export class Base{
       return;
     }
 
-    if (this._originalPool !== originalPool) {
+    if (typeof originalPool !== "object" || originalPool.length < 1) {
+      return;
+    }
+
+    // if (this._originalPool !== originalPool) {
       // console.log("---");
       // shuffle(originalPool);
-    }
+    // }
     // console.log("===",shuffle(originalPool));
 
     const prepareData = this._transformPoolToStandard(
