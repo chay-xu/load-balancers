@@ -21,7 +21,7 @@ describe("WeightRandom", function () {
 
   it(".pick()", function () {
     assert(random.pick());
-    assert(typeof random.pick() === "string");
+    assert(typeof random.pick().host === "string");
   });
 
   it("the offset must be less than 1% of high traffic", function () {

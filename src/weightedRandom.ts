@@ -7,11 +7,6 @@ import { randomInteger } from "./util";
 // }
 
 export class WeightRandom extends Base {
-  // getWeight(): number;
-  // constructor(pool: Array<object:{}>){
-  //   super(pool);
-  // }
-
   pick() {
     const { pool, totalWeight, isWeightSame } = this;
     const len = pool.length;
@@ -37,43 +32,4 @@ export class WeightRandom extends Base {
       host: address
     };
   }
-
-  // getWeight(address: string) {
-  //   return this.weightMap.get(address);
-  // }
-
-  // select(addressList: Array<string>) {
-  //   const len = addressList.length;
-  //   let totalWeight = 0;
-  //   let isWeightSame = true;
-  //   let address;
-
-  //   for (let i = 0; i < len; i++) {
-  //     const weigit = super.getWeight(addressList[i]);
-  //     totalWeight += weigit;
-  //     if (
-  //       isWeightSame &&
-  //       i > 0 &&
-  //       weigit !== super.getWeight(addressList[i - 1])
-  //     ) {
-  //       isWeightSame = false;
-  //     }
-  //   }
-
-  //   if (totalWeight > 0 && !isWeightSame) {
-  //     let offset = RandomInt(totalWeight);
-  //     for (let i = 0; i < len; i++) {
-  //       offset -= super.getWeight(addressList[i]);
-  //       if (offset < 0) {
-  //         address = addressList[i];
-  //         break;
-  //       }
-  //     }
-  //   } else {
-  //     const index = RandomInt(len); // math.randomInt(len);
-  //     address = addressList[index];
-  //   }
-
-  //   return address;
-  // }
 }

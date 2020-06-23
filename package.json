@@ -2,11 +2,14 @@
   "name": "load-balancers",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
   "scripts": {
-    "test": "mocha -r ts-node/register test/**/*.ts",
     "build-ts": "tsc",
-    "dev": "tsc && node dist/index.js"
+    "build": "npm run build-ts && npm run lint",
+    "dev": "npm run build-ts && node dist/index.js",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "test": "mocha -r ts-node/register test/**/*.ts"
   },
   "repository": {
     "type": "git",

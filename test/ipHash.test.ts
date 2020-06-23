@@ -22,34 +22,51 @@ describe("IP Hash", function () {
   });
 
   it(".pick()", function () {
-    const ip = random.pick().host;
-
-    assert(ip);
-    assert(typeof ip === "string");
+    assert(random.pick());
+    assert(typeof random.pick().host === "string");
   });
 
-  it("hash must be equal", function () {
+  it("hash must be consistent", function () {
     const loop = 100;
     
     for (let i = 0; i < loop; i++) {
       const node = random.pick([`test${i}`]);
       const ip = node.host;
-      // total = statistics[ip] || 0;
-      // statistics[ip] = total + 1;
 
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < loop; i++) {
         assert(random.pick(node.args).host === ip);
       }
-      // console.log(random.pick(node.args).host === ip);
     }
-    // console.log(statistics, weightRandomPool.length);
+  });
+
+  it("the offset must be less than 20% of high traffic", function () {
+    const statistics: Record<string, number> = {};
+    const loop = 100000;
+    let total: number;
 
     for (let i = 0; i < loop; i++) {
-      const node = random.pick(["test"]);
+      const node = random.pick([`test${i}`]);
       const ip = node.host;
-      // total = statistics[ip] || 0;
-      // statistics[ip] = total + 1;
-      assert(random.pick(node.args).host === ip);
+
+      total = statistics[ip] || 0;
+      statistics[ip] = total + 1;
     }
+    console.log(statistics);
+
+    const len = randomPool.length;
+    const avg = loop / len;
+    const expectPer = Number((avg/loop).toFixed(3));
+
+    for(let i = 0; i < len; i++){
+      const address = random.pool[i];
+      const count = statistics[address];
+
+      const realPer = Number((count/loop).toFixed(3));
+      console.log((avg/loop), (count/loop));
+
+      // offset 20%
+      assert(Math.abs(expectPer - realPer) < 0.2);
+    }
+    
   });
 });

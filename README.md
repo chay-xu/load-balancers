@@ -1,6 +1,10 @@
 # load-balancers
 
+## getting started
 
+## build
+
+execute `npm run build` from a terminal window
 
 ## test
 

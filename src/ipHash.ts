@@ -1,13 +1,13 @@
 import crypto from "crypto";
 import { Base } from "./base";
 import { PoolType } from "./interface";
-import { randomInteger } from "./util";
+// import { randomInteger } from "./util";
 
 const NUM = 128;
 
 export class IpHash extends Base {
-  _virtualNodes: Map<number, string>;
-  _sortKeys: Array<number>;
+  private _virtualNodes: Map<number, string>;
+  private _sortKeys: Array<number>;
 
   reset(pool: PoolType) {
     const nodeList = super.reset(pool);
@@ -15,10 +15,11 @@ export class IpHash extends Base {
 
     if (nodeList) {
       for (const address of nodeList) {
-        // console.log(address);
         for (let i = 0; i < NUM / 4; i++) {
-          const digest = this._messageDigest(`${address}${i}`);
+          const digest = this._digest(`${address}${i}`);
+          
           for (let h = 0; h < 4; h++) {
+            // virtual nodes
             const m = this._hash(digest, h);
             this._virtualNodes.set(m, address);
           }
@@ -32,7 +33,7 @@ export class IpHash extends Base {
     return nodeList;
   }
 
-  _hash(digest: string, index: number) {
+  private _hash(digest: string, index: number) {
     const f =
       (((digest[3 + index * 4] as unknown) as number & 0xff) << 24) |
       (((digest[2 + index * 4] as unknown) as number & 0xff) << 16) |
@@ -43,16 +44,16 @@ export class IpHash extends Base {
     return f & 0xffffffff;
   }
 
-  _messageDigest(value: string): string {
+  private _digest(value: string): string {
     const md5 = crypto.createHash("md5");
-// console.log(md5.update(value, "utf8").digest());
-    return md5.update(value, "utf8").digest().toString("utf8");
+
+    return md5.update(value, "utf8").digest("hex").toString();
   }
 
-  _selectForKey(hash: number) {
+  private _selectForKey(hash: number) {
     const len = this._sortKeys.length;
     let key = this._sortKeys[0];
-    // console.log(this._sortKeys);
+
     if (this._sortKeys[len - 1] >= hash) {
       for (let i = len - 1; i >= 0; i--) {
         if (this._sortKeys[i] < hash) {
@@ -65,26 +66,15 @@ export class IpHash extends Base {
     return this._virtualNodes.get(key);
   }
 
-  _buildKeyOfHash(args: Array<any>) {
+  private _buildKeyOfHash(args: Array<unknown>) {
     if (!args || !args.length) return "";
     return JSON.stringify(args[0]);
   }
 
-  pick(args?: Array<any>) {
-    // console.log("====",md5("192.168.1.144"));
-    // console.log(md5);
-
-    // console.log("pick", this.pool[len]);
-    // const { host } = this.pool[len];
-    // return "";
+  pick(args?: Array<unknown>) {
     const key = this._buildKeyOfHash(args);
     // console.log(Array.from(this._virtualNodes.keys()).sort());
-    // console.log(this._sortKeys);
-    const digest = this._messageDigest(key);
-    // console.log(digest, this._hash(digest, 0));
-    // console.log(this._selectForKey(this._hash(digest, 0)));
-    // console.log("key", this._hash(digest, 0), this._sortKeys);
-    // return this._selectForKey(this._hash(digest, 0));
+    const digest = this._digest(key);
 
     return {
       host: this._selectForKey(this._hash(digest, 0)),

@@ -22,7 +22,7 @@ describe("RoundRobin", function () {
 
   it(".pick()", function () {
     assert(random.pick());
-    assert(typeof random.pick() === "string");
+    assert(typeof random.pick().host === "string");
   });
 
   it(".currentIndex", function () {
@@ -54,9 +54,6 @@ describe("RoundRobin", function () {
       const realPer = Number((count/loop).toFixed(3));
 
       assert.equal(expectPer, realPer);
-    }
-    // console.log(statistics);
-    // console.log(random.pick());
-    
+    } 
   });
 });

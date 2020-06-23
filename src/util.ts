@@ -59,69 +59,69 @@ export function prepareWeights(pool: StandardPoolType) {
   return pool;
 }
 
-export function transformPoolToStandard(pool: PoolType, defaultWeight: number) {
-  if (pool.length === 0) {
-    throw new Error("cannot transform a zero length pool");
-  }
+// export function transformPoolToStandard(pool: PoolType, defaultWeight: number) {
+//   if (pool.length === 0) {
+//     throw new Error("cannot transform a zero length pool");
+//   }
 
-  const addressList: Array<string> = [];
-  const weightMap: Map<string, number> = new Map();
+//   const addressList: Array<string> = [];
+//   const weightMap: Map<string, number> = new Map();
 
-  let totalWeight = 0;
-  let isWeightSame = true;
-  let maxWeight = 0;
+//   let totalWeight = 0;
+//   let isWeightSame = true;
+//   let maxWeight = 0;
 
-  pool.forEach((node: string | AddressInterface, index: number) => {
-    // console.log(item);
-    let realWeight;
+//   pool.forEach((node: string | AddressInterface, index: number) => {
+//     // console.log(item);
+//     let realWeight;
 
-    if (typeof node === "object") {
-      const { host, weight } = node;
+//     if (typeof node === "object") {
+//       const { host, weight } = node;
 
-      addressList.push(host);
+//       addressList.push(host);
 
-      realWeight = weight ? weight : defaultWeight;
-      weightMap.set(host, realWeight);
+//       realWeight = weight ? weight : defaultWeight;
+//       weightMap.set(host, realWeight);
 
-      if (index > 0) {
-        const prevWeight = (pool[index - 1] as AddressInterface).weight;
+//       if (index > 0) {
+//         const prevWeight = (pool[index - 1] as AddressInterface).weight;
 
-        if (weight !== prevWeight) {
-          isWeightSame = false;
-        }
+//         if (weight !== prevWeight) {
+//           isWeightSame = false;
+//         }
 
-        maxWeight = Math.max(weight, prevWeight);
-      }
-    } else {
-      addressList.push(node);
+//         maxWeight = Math.max(weight, prevWeight);
+//       }
+//     } else {
+//       addressList.push(node);
 
-      realWeight = defaultWeight;
-      weightMap.set(node, realWeight);
-    }
+//       realWeight = defaultWeight;
+//       weightMap.set(node, realWeight);
+//     }
 
-    totalWeight += realWeight;
-  });
+//     totalWeight += realWeight;
+//   });
 
-  return {
-    addressList,
-    weightMap,
-    totalWeight,
-    isWeightSame,
-    maxWeight
-  };
+//   return {
+//     addressList,
+//     weightMap,
+//     totalWeight,
+//     isWeightSame,
+//     maxWeight
+//   };
 
-  // const metadata = pool[0];
+//   // const metadata = pool[0];
 
-  // if(typeof metadata === "object"){
-  //   return pool as StandardPoolType;
-  // }
+//   // if(typeof metadata === "object"){
+//   //   return pool as StandardPoolType;
+//   // }
 
-  // return (pool as Array<string>).map((host: string) => {
-  //   return {
-  //     host
-  //   };
-  // });
-}
+//   // return (pool as Array<string>).map((host: string) => {
+//   //   return {
+//   //     host
+//   //   };
+//   // });
+// }
 
 export function shuffle(list: PoolType) {
   let n = list.length;
