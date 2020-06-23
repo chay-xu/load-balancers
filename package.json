@@ -21,8 +21,15 @@
     "url": "https://github.com/xu8511831/load-balancers/issues"
   },
   "homepage": "https://github.com/xu8511831/load-balancers#readme",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }  
+  },
   "dependencies": {},
   "devDependencies": {
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
     "@types/async": "^3.2.0",
     "@types/eslint": "^6.8.0",
     "@types/md5": "^2.2.0",
@@ -33,6 +40,7 @@
     "@typescript-eslint/parser": "^2.29.0",
     "chai": "^4.2.0",
     "eslint": "^6.8.0",
+    "husky": "^4.2.5",
     "mocha": "^8.0.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
