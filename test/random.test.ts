@@ -53,4 +53,11 @@ describe("Random", function () {
     }
     
   });
+
+  it(".reset()", function () {
+    random.reset(weightRandomPool);
+    // console.log(random);
+    // assert(typeof random.isWeightSame === "boolean");
+    assert.equal(random.pool.length, weightRandomPool.length);
+  });
 });

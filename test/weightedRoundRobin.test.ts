@@ -3,14 +3,15 @@ import assert from "assert";
 
 describe("WeightedRoundRobin", function () {
   const randomPool = ["127.0.0.1", "127.0.0.3", "127.0.0.2", "127.0.0.4"];
+  const maxWeight = 5;
   const weightRandomPool = [
     { host: "127.0.0.2:6061", weight: 2 },
     { host: "127.0.0.1:6062", weight: 3 },
-    { host: "127.0.0.3:6063", weight: 5 },
+    { host: "127.0.0.3:6063", weight: maxWeight },
   ];
 
   const random = new WeightedRoundRobin(weightRandomPool, {
-    defaultWeight: 10,
+    defaultWeight: maxWeight,
   });
 
   it("not weight property", function () {
@@ -43,6 +44,13 @@ describe("WeightedRoundRobin", function () {
     assert.equal(random.currentWeight, 0);
   });
 
+  it(".maxWeight", function () {
+    random.reset(weightRandomPool);
+    assert(typeof random.maxWeight === "number");
+    // console.log(random);
+    assert.equal(random.maxWeight, maxWeight);
+  });
+
   it("load balance must be smooth", function(){
     const order = [];
     random.reset(weightRandomPool);
@@ -51,8 +59,8 @@ describe("WeightedRoundRobin", function () {
       const ip = random.pick().host;
       order.push(random.getWeight(ip));
     }
-    // console.log(statistics, order);
-    assert.deepStrictEqual(order, [5, 5, 3, 5, 2, 3, 5, 2, 3, 5]);
+
+    assert.notDeepStrictEqual(order, [5, 5, 5, 5, 5, 3, 3, 3, 2, 2]);
   });
 
   it("the ratio must be absolute equality of high traffic", function () {
@@ -68,11 +76,17 @@ describe("WeightedRoundRobin", function () {
     }
 
     const len = weightRandomPool.length;
+    let totalWeight = 0;
+    
+    for(let i = 0; i < len; i++){
+      const address = random.pool[i];
+      const weight = random.getWeight(address);
+      totalWeight += weight;
+    }
 
     for(let i = 0; i < len; i++){
       const address = random.pool[i];
       const weight = random.getWeight(address);
-      const totalWeight = random.totalWeight;
       const count = statistics[address];
 
       const expectPer = Number((weight/totalWeight).toFixed(3));
@@ -81,5 +95,34 @@ describe("WeightedRoundRobin", function () {
 
       assert(Math.abs(expectPer - realPer) === 0);
     }
+  });
+
+  it(".reset()", function () {
+    random.reset(randomPool);
+
+    assert.equal(random.pool.length, randomPool.length);
+    assert.equal(random.currentIndex, -1);
+    assert.equal(random.currentWeight, 0);
+    assert.equal(random.gcdWeight, 5);
+    assert.equal(random.maxWeight, 5);
+  });
+
+  it("update pool list", function () {
+    // randomPool.push("127.0.0.5");
+    const randomPool = [
+      { host: "127.0.0.2:6061", weight: 2 },
+      { host: "127.0.0.4:6064", weight: 20 },
+      { host: "127.0.0.1:6062", weight: 3 },
+      { host: "127.0.0.3:6063", weight: 10 },
+    ];
+    random.reset(weightRandomPool);
+    random.reset(randomPool);
+    // console.log(random);
+    
+    // assert.deepStrictEqual(random.pool, randomPool);
+    assert.equal(random.currentIndex, -1);
+    assert.equal(random.currentWeight, 0);
+    assert.equal(random.gcdWeight, 1);
+    assert.equal(random.maxWeight, 20);
   });
 });

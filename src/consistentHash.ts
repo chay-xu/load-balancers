@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { Base } from "./base";
-import { PoolType } from "./interface";
+import { PoolType, PickNodeInterface, StandardPoolArrayType } from "./interface";
 // import { randomInteger } from "./util";
 
 const NUM = 128;
@@ -9,7 +9,7 @@ export class ConsistentHash extends Base {
   private _virtualNodes: Map<number, string>;
   private _sortKeys: Array<number>;
 
-  reset(pool: PoolType) {
+  public reset(pool: PoolType): StandardPoolArrayType {
     const nodeList = super.reset(pool);
     this._virtualNodes = new Map();
 
@@ -30,17 +30,22 @@ export class ConsistentHash extends Base {
     this._sortKeys = Array.from(this._virtualNodes.keys()).sort(
       (a, b) => a - b
     );
+
     return nodeList;
   }
 
-  private _hash(digest: string, index: number) {
+  /**
+   * convert byte to int
+   * @param digest 
+   * @param index 
+   */
+  private _hash(digest: string, index: number): number {
     const f =
       (((digest[3 + index * 4] as unknown) as number & 0xff) << 24) |
       (((digest[2 + index * 4] as unknown) as number & 0xff) << 16) |
       (((digest[1 + index * 4] as unknown) as number & 0xff) << 8) |
       ((digest[index * 4] as unknown) as number & 0xff);
 
-    // console.log(digest[3 + index * 4], f);
     return f & 0xffffffff;
   }
 
@@ -50,7 +55,7 @@ export class ConsistentHash extends Base {
     return md5.update(value, "utf8").digest("hex").toString();
   }
 
-  private _selectForKey(hash: number) {
+  private _selectForKey(hash: number): string {
     const len = this._sortKeys.length;
     let key = this._sortKeys[0];
 
@@ -66,12 +71,12 @@ export class ConsistentHash extends Base {
     return this._virtualNodes.get(key);
   }
 
-  private _buildKeyOfHash(args: Array<unknown>) {
+  private _buildKeyOfHash(args: Array<unknown>): string {
     if (!args || !args.length) return "";
     return JSON.stringify(args[0]);
   }
 
-  pick(args?: Array<unknown>) {
+  public pick(args?: Array<unknown>): PickNodeInterface {
     const key = this._buildKeyOfHash(args);
     // console.log(Array.from(this._virtualNodes.keys()).sort());
     const digest = this._digest(key);

@@ -56,4 +56,11 @@ describe("RoundRobin", function () {
       assert.equal(expectPer, realPer);
     } 
   });
+
+  it(".reset()", function () {
+    random.reset(weightRandomPool);
+
+    assert.equal(random.pool.length, weightRandomPool.length);
+    assert.equal(random.currentIndex, 0);
+  });
 });

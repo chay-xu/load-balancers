@@ -5,11 +5,10 @@ import assert from "assert";
 
 describe("Base class", function () {
   const randomPool = ["127.0.0.1", "127.0.0.3", "127.0.0.2", "127.0.0.4"];
-  const maxWeight = 10;
   const weightRandomPool = [
     { host: "127.0.0.2:6061", weight: 2 },
     { host: "127.0.0.1:6062", weight: 3 },
-    { host: "127.0.0.3:6063", weight: maxWeight },
+    { host: "127.0.0.3:6063", weight: 10 },
   ];
 
   const random = new Base(weightRandomPool);
@@ -41,14 +40,6 @@ describe("Base class", function () {
     assert.equal(weightRandomPool.length, random.size);
   });
 
-  it(".totalWeight", function () {
-    assert(typeof random.totalWeight === "number");
-  });
-
-  it(".isWeightSame", function () {
-    assert(typeof random.isWeightSame === "boolean");
-  });
-
   it(".weightMap", function () {
     // console.log(random.weightMap);
     const host = weightRandomPool[0].host;
@@ -58,11 +49,6 @@ describe("Base class", function () {
     assert(random.weightMap.has(host));
     assert.equal(random.weightMap.get(host), weight);
     assert.equal(random.weightMap.size, weightRandomPool.length);
-  });
-
-  it(".maxWeight", function () {
-    assert(typeof random.maxWeight === "number");
-    assert.equal(random.maxWeight, maxWeight);
   });
 
   it(".pick()", function () {
@@ -84,7 +70,7 @@ describe("Base class", function () {
   it(".reset()", function () {
     const compareRandom = new Base(weightRandomPool);
 
-    assert.deepEqual(random.reset(weightRandomPool), compareRandom.pool);
+    assert.equal(random.reset(weightRandomPool).length, compareRandom.pool.length);
   });
   
 });

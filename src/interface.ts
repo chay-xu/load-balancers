@@ -3,14 +3,16 @@ export interface AddressInterface {
   weight?: number;
 }
 
-export type StandardPoolType = Array<AddressInterface>
+export type StandardPoolArrayType = Array<string>
+export type PoolListType = Array<AddressInterface>
+export type PoolType = StandardPoolArrayType | PoolListType
 
-export type PoolType = Array<string> | StandardPoolType
-
-export interface StandardProperty {
+export interface StandardPropertyInterface {
   pool: Array<string>;
   weightMap: Map<string, number>;
-  totalWeight: number;
-  isWeightSame: boolean;
-  maxWeight: number;
+}
+
+export interface PickNodeInterface {
+  host: string;
+  args?: Array<unknown>;
 }

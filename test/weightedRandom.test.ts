@@ -24,6 +24,14 @@ describe("WeightRandom", function () {
     assert(typeof random.pick().host === "string");
   });
 
+  it(".totalWeight", function () {
+    assert(typeof random.totalWeight === "number");
+  });
+
+  it(".isWeightSame", function () {
+    assert(typeof random.isWeightSame === "boolean");
+  });
+
   it("the offset must be less than 1% of high traffic", function () {
     const statistics: Record<string, number> = {};
     const loop = 100000;
@@ -37,10 +45,17 @@ describe("WeightRandom", function () {
     // console.log(statistics);
 
     const len = weightRandomPool.length;
+    let totalWeight = 0;
+
     for(let i = 0; i < len; i++){
       const address = random.pool[i];
       const weight = random.getWeight(address);
-      const totalWeight = random.totalWeight;
+      totalWeight += weight;
+    }
+
+    for(let i = 0; i < len; i++){
+      const address = random.pool[i];
+      const weight = random.getWeight(address);
       const count = statistics[address];
 
       const expectPer = Number((weight/totalWeight).toFixed(3));
@@ -51,5 +66,14 @@ describe("WeightRandom", function () {
       assert(Math.abs(expectPer - realPer) < 0.01);
     }
     
+  });
+
+  it(".reset()", function () {
+    random.reset(randomPool);
+    // console.log(random.pool);
+
+    assert.equal(random.pool.length, randomPool.length);
+    assert.equal(random.isWeightSame, true);
+    assert.equal(random.totalWeight, 400);
   });
 });

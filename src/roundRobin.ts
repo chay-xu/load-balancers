@@ -1,17 +1,17 @@
 import { Base } from "./base";
-import { PoolType } from "./interface";
+import { PoolType, StandardPoolArrayType, PickNodeInterface } from "./interface";
 
 export class RoundRobin extends Base {
   currentIndex: number;
 
-  reset(pool: PoolType) {
+  public reset(pool: PoolType): StandardPoolArrayType {
     const nodeList = super.reset(pool);
     this.currentIndex = 0;
 
     return nodeList;
   }
 
-  pick() {
+  public pick(): PickNodeInterface {
     const address = this.pool[this.currentIndex++];
 
     const len = this.size;

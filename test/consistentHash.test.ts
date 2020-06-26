@@ -3,7 +3,7 @@ import assert from "assert";
 // import chai from "chai";
 
 
-describe("IP Hash", function () {
+describe("ConsistentHash", function () {
   const randomPool = ["127.0.0.1", "127.0.0.3", "127.0.0.2", "127.0.0.4"];
   // const randomPool = ["127.0.0.1", "127.0.0.3"];
   const weightRandomPool = [
@@ -51,7 +51,7 @@ describe("IP Hash", function () {
       total = statistics[ip] || 0;
       statistics[ip] = total + 1;
     }
-    console.log(statistics);
+    // console.log(statistics);
 
     const len = randomPool.length;
     const avg = loop / len;
@@ -62,11 +62,17 @@ describe("IP Hash", function () {
       const count = statistics[address];
 
       const realPer = Number((count/loop).toFixed(3));
-      console.log((avg/loop), (count/loop));
+      // console.log((avg/loop), (count/loop));
 
       // offset 20%
       assert(Math.abs(expectPer - realPer) < 0.2);
     }
     
+  });
+
+  it(".reset()", function () {
+    random.reset(weightRandomPool);
+    // console.log(random.pool);
+    assert.equal(random.pool.length, weightRandomPool.length);
   });
 });

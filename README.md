@@ -6,7 +6,9 @@
 
 ## Getting Started
 
+### ts
 
+### commomjs
 
 ## Build
 
@@ -25,5 +27,5 @@ $ yarn test
 if you need the specify test file to run
 
 ```bash
-$ npx mocha -r ts-node/register  --file './test/weightRandom.test.ts'
+$ npx mocha -r ts-node/register  --file './test/weightedRandom.test.ts'
 ```

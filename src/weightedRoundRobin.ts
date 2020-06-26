@@ -1,25 +1,35 @@
 import { Base } from "./base";
-import { PoolType } from "./interface";
+import { PoolType, AddressInterface, StandardPoolArrayType, PickNodeInterface } from "./interface";
 // import { randomInteger } from "./util";
 
 export class WeightedRoundRobin extends Base {
   currentIndex: number;
-  // offset: number;
   gcdWeight: number;
   currentWeight: number;
+  maxWeight: number;
 
-  reset(pool: PoolType) {
+  public reset(pool: PoolType): StandardPoolArrayType {
     const nodeList = super.reset(pool);
     this.currentIndex = -1;
     this.currentWeight = 0;
-
     this.gcdWeight = this.gcd(...this.weightMap.values());
     // console.log("gcdWeight",this.gcdWeight);
+    let maxWeight = 0;
+
+    nodeList.forEach((host: string) => {
+      const weight = this.getWeight(host);
+
+        // const prevWeight = this.getWeight(nodeList[index - 1]);
+        // console.log("maxWeight",maxWeight, weight);
+        maxWeight = Math.max(maxWeight, weight);
+    });
+
+    this.maxWeight = maxWeight;
 
     return nodeList;
   }
 
-  gcd(...arr: number[]): number {
+  private gcd(...arr: number[]): number {
     // Euclidean Algorithm
     const data = [].concat(...arr);
 
@@ -30,14 +40,7 @@ export class WeightedRoundRobin extends Base {
     return data.reduce((a, b) => helperGcd(a, b));
   }
 
-  pick() {
-    // let address;
-    // const count = this.size;
-    // while (count--) {
-    //   address = this.rr();
-    //   if (address) return address;
-    // }
-
+  public pick(): PickNodeInterface {
     while (true) {
       // console.log("currentIndex", this.currentIndex, this.maxWeight, this.gcdWeight);
       this.currentIndex = (this.currentIndex + 1) % this.size;
@@ -60,13 +63,5 @@ export class WeightedRoundRobin extends Base {
         };
       }
     }
-
-    // const address = this.pool[this.currentIndex++];
-
-    // const len = this.size;
-    // this.currentIndex = this.currentIndex % len;
-
-    // return address;
-    // return this.pool[this.offset];
   }
 }
