@@ -1,5 +1,5 @@
 {
-  "name": "load-balancers",
+  "name": "load-balancer-algorithm",
   "version": "1.0.0",
   "description": "![CI](https://github.com/xu8511831/load-balancers/workflows/CI/badge.svg)",
   "main": "dist/index.js",
