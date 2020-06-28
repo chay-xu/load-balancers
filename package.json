@@ -1,7 +1,7 @@
 {
   "name": "load-balancers",
   "version": "1.0.0",
-  "description": "",
+  "description": "![CI](https://github.com/xu8511831/load-balancers/workflows/CI/badge.svg)",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "scripts": {
@@ -24,7 +24,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }  
+    }
   },
   "dependencies": {},
   "devDependencies": {
@@ -44,5 +44,15 @@
     "mocha": "^8.0.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "load",
+    "balancers",
+    "rpc",
+    "node",
+    "algorithm"
+  ]
 }
