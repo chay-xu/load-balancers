@@ -1,5 +1,9 @@
 import { Base } from "./base";
-import { PoolType, AddressInterface, StandardPoolArrayType, PickNodeInterface } from "./interface";
+import {
+  PoolType,
+  StandardPoolArrayType,
+  PickNodeInterface,
+} from "./interface";
 // import { randomInteger } from "./util";
 
 export class WeightedRoundRobin extends Base {
@@ -19,9 +23,7 @@ export class WeightedRoundRobin extends Base {
     nodeList.forEach((host: string) => {
       const weight = this.getWeight(host);
 
-        // const prevWeight = this.getWeight(nodeList[index - 1]);
-        // console.log("maxWeight",maxWeight, weight);
-        maxWeight = Math.max(maxWeight, weight);
+      maxWeight = Math.max(maxWeight, weight);
     });
 
     this.maxWeight = maxWeight;
@@ -42,24 +44,23 @@ export class WeightedRoundRobin extends Base {
 
   public pick(): PickNodeInterface {
     while (true) {
-      // console.log("currentIndex", this.currentIndex, this.maxWeight, this.gcdWeight);
       this.currentIndex = (this.currentIndex + 1) % this.size;
-      
+
       if (this.currentIndex == 0) {
         this.currentWeight = this.currentWeight - this.gcdWeight;
 
         if (this.currentWeight <= 0) {
           this.currentWeight = this.maxWeight;
-          
+
           if (this.currentWeight == 0) return null;
         }
       }
+
       const address = this.pool[this.currentIndex];
-      // console.log(this.getWeight(address), this.currentWeight);
 
       if (this.getWeight(address) >= this.currentWeight) {
         return {
-          host: address
+          host: address,
         };
       }
     }

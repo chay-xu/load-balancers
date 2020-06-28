@@ -78,7 +78,6 @@ export class ConsistentHash extends Base {
 
   public pick(args?: Array<unknown>): PickNodeInterface {
     const key = this._buildKeyOfHash(args);
-    // console.log(Array.from(this._virtualNodes.keys()).sort());
     const digest = this._digest(key);
 
     return {

@@ -42,7 +42,6 @@ describe("WeightRandom", function () {
       total = statistics[ip] || 0;
       statistics[ip] = total + 1;
     }
-    // console.log(statistics);
 
     const len = weightRandomPool.length;
     let totalWeight = 0;
@@ -60,7 +59,6 @@ describe("WeightRandom", function () {
 
       const expectPer = Number((weight/totalWeight).toFixed(3));
       const realPer = Number((count/loop).toFixed(3));
-      // console.log((weight/totalWeight), (count/loop));
 
       // offset 1%
       assert(Math.abs(expectPer - realPer) < 0.01);
@@ -70,7 +68,6 @@ describe("WeightRandom", function () {
 
   it(".reset()", function () {
     random.reset(randomPool);
-    // console.log(random.pool);
 
     assert.equal(random.pool.length, randomPool.length);
     assert.equal(random.isWeightSame, true);

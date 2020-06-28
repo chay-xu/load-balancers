@@ -39,10 +39,6 @@ export class Base {
     if (typeof originalPool !== "object" || originalPool.length < 1)
       return null;
 
-    // console.log("original",this._originalPool === originalPool);
-    // const newSet: Set<string> = new Set();
-    // const oldSet = new Set();
-
     if (this._originalPool !== originalPool) {
       const prepareData = this._transformPoolToStandard(
         originalPool,
