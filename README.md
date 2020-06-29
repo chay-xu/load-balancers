@@ -1,14 +1,56 @@
-# load-balancers 
-![CI](https://github.com/xu8511831/load-balancers/workflows/CI/badge.svg)
+# load-balancer-algorithm
+![CI](https://github.com/xu8511831/load-balancers/workflows/CI/badge.svg) ![version](https://img.shields.io/npm/v/load-balancer-algorithm?color=brightgreen) ![size](https://img.shields.io/bundlephobia/min/load-balancer-algorithm?color=brightgreen)
+
+Just load balancing algorithms implementation.
+
+Current support load balancing algorithms include:
+- Random
+- Weighted Random
+- Round Robin
+- Weighted Round Robin
+- Consistent Hash
 
 ## Install
-
+```bash
+$ npm i load-balancer-algorithm
+# or
+$ yarn add load-balancer-algorithm
+```
 
 ## Getting Started
 
-### ts
+### typescript
+```ts
+import LBA, { Random } from "load-balancer-algorithm";
+
+const weightRandomPool = [
+  { host: "127.0.0.2:6061", weight: 2 },
+  { host: "127.0.0.1:6062", weight: 3 },
+  { host: "127.0.0.3:6063", weight: 10 },
+];
+
+const loadBalance = new LBA.WeightedRoundRobin(weightRandomPool);
+const address = loadBalance.pick();
+
+// should return { host }
+console.log(address)
+```
 
 ### commomjs
+```js
+const LBA = require('load-balancer-algorithm');
+
+const weightRandomPool = [
+  { host: "127.0.0.2:6061", weight: 2 },
+  { host: "127.0.0.1:6062", weight: 3 },
+  { host: "127.0.0.3:6063", weight: 10 },
+];
+
+const loadBalance = new LBA.WeightRandom(weightRandomPool);
+const host = loadBalance.pick();
+
+console.log(host)
+```
 
 ## Build
 
