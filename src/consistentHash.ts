@@ -1,7 +1,6 @@
 import crypto from "crypto";
 import { Base } from "./base";
 import { PoolType, PickNodeInterface, StandardPoolArrayType } from "./interface";
-// import { randomInteger } from "./util";
 
 const NUM = 128;
 

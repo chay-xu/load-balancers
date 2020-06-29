@@ -10,7 +10,7 @@ Current support load balancing algorithms include:
 - Weighted Round Robin
 - Consistent Hash
 
-## Install
+## Installation
 ```bash
 $ npm i load-balancer-algorithm
 # or
@@ -23,13 +23,13 @@ $ yarn add load-balancer-algorithm
 ```ts
 import LBA, { Random } from "load-balancer-algorithm";
 
-const weightRandomPool = [
+const weightPool = [
   { host: "127.0.0.2:6061", weight: 2 },
   { host: "127.0.0.1:6062", weight: 3 },
   { host: "127.0.0.3:6063", weight: 10 },
 ];
 
-const loadBalance = new LBA.WeightedRoundRobin(weightRandomPool);
+const loadBalance = new LBA.WeightedRoundRobin(weightPool);
 const address = loadBalance.pick();
 
 // should return { host }
@@ -40,17 +40,28 @@ console.log(address)
 ```js
 const LBA = require('load-balancer-algorithm');
 
-const weightRandomPool = [
+const weightPool = [
   { host: "127.0.0.2:6061", weight: 2 },
   { host: "127.0.0.1:6062", weight: 3 },
   { host: "127.0.0.3:6063", weight: 10 },
 ];
 
-const loadBalance = new LBA.WeightRandom(weightRandomPool);
+const loadBalance = new LBA.WeightRandom(weightPool);
 const host = loadBalance.pick();
 
 console.log(host)
 ```
+
+## API
+### .pool
+The property will be get pool of an instance.
+
+### .pick(args?: array)
+Will get a object from the pool based on the different algorithms.
+
+### .reset(pool: array)
+Reset the instance fully.
+
 
 ## Build
 

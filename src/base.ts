@@ -1,4 +1,3 @@
-// import { parse as urlParse} from "url";
 import {
   PoolType,
   AddressInterface,
@@ -12,17 +11,13 @@ interface OptionsInterface {
   defaultWeight: number;
 }
 
-// const address = urlParse(`bolt://127.0.0.1:${9000}`, true);
-// console.log(address);
 const DEFAULT_WEIGHT = 100;
 
 export class Base {
   private _originalPool: PoolType;
-  // _pool: StandardPoolType;
   private _pool: StandardPoolArrayType;
   private _weightMap: Map<string, number>;
   defaultWeight: number;
-  // pool: PoolType;
 
   constructor(pool: PoolType, options?: OptionsInterface) {
     const { defaultWeight } = options || {};
@@ -45,7 +40,6 @@ export class Base {
         this.defaultWeight
       );
 
-      // const oldPool = this.pool;
       const newPool = prepareData.pool;
 
       // for (const host of oldPool) {
@@ -62,10 +56,7 @@ export class Base {
 
       this._originalPool = originalPool;
       this._pool = shuffle(newPool);
-      // this._pool = newPool;
       this._weightMap = prepareData.weightMap;
-
-      // shuffle(originalPool);
     }
 
     return this._pool;
