@@ -12,10 +12,10 @@ export class RoundRobin extends Base {
   }
 
   public pick(): PickNodeInterface {
-    const address = this.pool[this.currentIndex++];
+    const address = this.pool[this.currentIndex];
 
     const len = this.size;
-    this.currentIndex = this.currentIndex % len;
+    this.currentIndex = (this.currentIndex + 1) % len;
     
     return {
       host: address
