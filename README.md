@@ -31,11 +31,20 @@ const weightPool = [
   { host: "127.0.0.3:6063", weight: 10 },
 ];
 
-const loadBalance = new LBA.WeightedRoundRobin(weightPool);
-const address = loadBalance.pick();
+const wrr = new LBA.WeightedRoundRobin(weightPool);
+const wrrAddress = wrr.pick();
 
 // should return { host }
-console.log(address)
+console.log(wrrAddress)
+
+// non-weighted
+const pool = ["127.0.0.1", "127.0.0.3", "127.0.0.2", "127.0.0.4"];
+
+const r = new Random(pool);
+const rAddress = r.pick();
+
+// should return { host }
+console.log(rAddress)
 ```
 
 ### commomjs
