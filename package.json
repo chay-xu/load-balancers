@@ -1,6 +1,6 @@
 {
   "name": "load-balancer-algorithm",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "![CI](https://github.com/xu8511831/load-balancers/workflows/CI/badge.svg)",
   "main": "dist/index.js",
   "types": "src/index.ts",
