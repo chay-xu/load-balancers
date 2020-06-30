@@ -67,11 +67,17 @@ console.log(host)
 ### .pool
 The property will be get pool of an instance.
 
+### .size
+Returns the number of in pool object.
+
 ### .pick(args?: array)
 Will get a object from the pool based on the different algorithms.
 
 ### .reset(pool: array)
 Reset the instance fully.
+
+### .getWeight(host: string)
+Returns a weight value associated to the host.
 
 
 ## Build
