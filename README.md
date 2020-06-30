@@ -3,12 +3,14 @@
 
 Just load balancing algorithms implementation.
 
-Current support load balancing algorithms include:
+Currently supported load balancing algorithms include:
 - Random
 - Weighted Random
 - Round Robin
 - Weighted Round Robin
 - Consistent Hash
+
+You can debug the project in VS CODE.
 
 ## Installation
 ```bash
