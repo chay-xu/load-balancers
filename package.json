@@ -1,7 +1,7 @@
 {
   "name": "load-balancer-algorithm",
   "version": "1.0.3",
-  "description": "![CI](https://github.com/xu8511831/load-balancers/workflows/CI/badge.svg)",
+  "description": "Load balancing algorithms using Node.js",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "scripts": {
@@ -9,7 +9,8 @@
     "build-ts": "tsc",
     "dev": "npm run build-ts && node dist/index.js",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
-    "test": "mocha -r ts-node/register test/**/*.ts"
+    "test": "mocha -r ts-node/register test/**/*.ts",
+    "ci": "npm run lint && npm run test"
   },
   "repository": {
     "type": "git",

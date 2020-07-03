@@ -21,7 +21,7 @@ $ yarn add load-balancer-algorithm
 
 ## Getting Started
 
-### typescript
+### TypeScript
 ```ts
 import LBA, { Random } from "load-balancer-algorithm";
 
@@ -47,7 +47,7 @@ const rAddress = r.pick();
 console.log(rAddress)
 ```
 
-### commomjs
+### Commomjs
 ```js
 const LBA = require('load-balancer-algorithm');
 
