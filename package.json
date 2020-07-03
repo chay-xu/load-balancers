@@ -10,7 +10,8 @@
     "dev": "npm run build-ts && node dist/index.js",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
     "test": "mocha -r ts-node/register test/**/*.ts",
-    "ci": "npm run lint && npm run test"
+    "ci": "npm run lint && npm run test",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -40,9 +41,12 @@
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "chai": "^4.2.0",
+    "coveralls": "^3.1.0",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "mocha": "^8.0.1",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^15.1.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
@@ -61,5 +65,25 @@
     "node",
     "algorithm",
     "algorithms"
-  ]
+  ],
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules/"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  }
 }

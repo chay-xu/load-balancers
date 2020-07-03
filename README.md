@@ -1,5 +1,5 @@
 # load-balancer-algorithm
-![CI](https://github.com/xu8511831/load-balancers/workflows/CI/badge.svg) ![version](https://img.shields.io/npm/v/load-balancer-algorithm?color=brightgreen) ![size](https://img.shields.io/bundlephobia/min/load-balancer-algorithm?color=brightgreen)
+[![Build Status](https://travis-ci.com/xu8511831/load-balancers.svg?branch=master)](https://travis-ci.com/xu8511831/load-balancers) [![Coverage Status](https://coveralls.io/repos/github/xu8511831/load-balancers/badge.svg)](https://coveralls.io/github/xu8511831/load-balancers) ![version](https://img.shields.io/npm/v/load-balancer-algorithm?color=brightgreen) ![size](https://img.shields.io/bundlephobia/min/load-balancer-algorithm?color=brightgreen)
 
 Just load balancing algorithms implementation.
 
