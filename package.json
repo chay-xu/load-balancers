@@ -1,6 +1,6 @@
 {
   "name": "load-balancer-algorithm",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Load balancing algorithms using Node.js",
   "main": "dist/index.js",
   "types": "src/index.ts",
